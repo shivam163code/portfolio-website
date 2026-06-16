@@ -232,6 +232,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -240,6 +241,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.0.0"
+=======
+>>>>>>> 6dee6fe (Update dependencies and portfolio content)
   go_router:
     dependency: "direct main"
     description:

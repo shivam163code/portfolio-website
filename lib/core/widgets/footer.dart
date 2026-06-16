@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_constants.dart';
@@ -41,14 +40,17 @@ class PortfolioFooter extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '© ${DateTime.now().year} ${AppConstants.name}. All rights reserved.',
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  color: Theme.of(context).colorScheme.onSurface,
+              Flexible(
+                child: Text(
+                  '© ${DateTime.now().year} ${AppConstants.name}. All rights reserved.',
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               ),
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'Made with ',
@@ -84,7 +86,8 @@ class PortfolioFooter extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: AppColors.primaryGradient),
+                gradient:
+                    const LinearGradient(colors: AppColors.primaryGradient),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Center(
@@ -104,7 +107,7 @@ class PortfolioFooter extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
@@ -130,13 +133,12 @@ class PortfolioFooter extends StatelessWidget {
         const SizedBox(height: 16),
         Row(
           children: [
-            _buildSocialIcon(FontAwesomeIcons.github, AppConstants.githubUrl),
+            _buildSocialIcon(Icons.code, AppConstants.githubUrl),
+            const SizedBox(width: 10),
+            _buildSocialIcon(Icons.link, AppConstants.linkedinUrl),
             const SizedBox(width: 10),
             _buildSocialIcon(
-                FontAwesomeIcons.linkedin, AppConstants.linkedinUrl),
-            const SizedBox(width: 10),
-            _buildSocialIcon(Icons.email_outlined,
-                'mailto:${AppConstants.email}'),
+                Icons.email_outlined, 'mailto:${AppConstants.email}'),
           ],
         ),
       ],
@@ -152,7 +154,7 @@ class PortfolioFooter extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 16),
@@ -174,7 +176,7 @@ class PortfolioFooter extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 16),
@@ -185,8 +187,7 @@ class PortfolioFooter extends StatelessWidget {
         _buildContactRow(
             context, Icons.location_on_outlined, AppConstants.location),
         const SizedBox(height: 8),
-        _buildContactRow(
-            context, Icons.school_outlined, AppConstants.college),
+        _buildContactRow(context, Icons.school_outlined, AppConstants.college),
       ],
     );
   }
@@ -199,8 +200,7 @@ class PortfolioFooter extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Row(
           children: [
-            const Icon(Icons.chevron_right,
-                size: 16, color: AppColors.primary),
+            const Icon(Icons.chevron_right, size: 16, color: AppColors.primary),
             const SizedBox(width: 4),
             Text(
               label,
@@ -215,8 +215,7 @@ class PortfolioFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildContactRow(
-      BuildContext context, IconData icon, String text) {
+  Widget _buildContactRow(BuildContext context, IconData icon, String text) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -235,7 +234,7 @@ class PortfolioFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialIcon(dynamic icon, String url) {
+  Widget _buildSocialIcon(IconData icon, String url) {
     return GestureDetector(
       onTap: () => UrlLauncherUtils.openUrl(url),
       child: Container(
@@ -247,9 +246,13 @@ class PortfolioFooter extends StatelessWidget {
           border: Border.all(color: AppColors.primary.withOpacity(0.2)),
         ),
         child: Center(
+<<<<<<< HEAD
           child: icon is FaIconData
               ? FaIcon(icon as FaIconData, size: 13, color: AppColors.primary)
               : Icon(icon as IconData, size: 15, color: AppColors.primary),
+=======
+          child: Icon(icon, size: 15, color: AppColors.primary),
+>>>>>>> 6dee6fe (Update dependencies and portfolio content)
         ),
       ),
     );

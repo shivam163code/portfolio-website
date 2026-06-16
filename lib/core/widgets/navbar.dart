@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_constants.dart';
@@ -186,33 +185,35 @@ class _PortfolioNavbarState extends State<PortfolioNavbar>
               ),
             ),
             child: Column(
-              children: AppConstants.navItems.map(
-                (item) => ListTile(
-                  title: Text(
-                    item,
-                    style: GoogleFonts.poppins(
-                      fontWeight: widget.activeSection == item.toLowerCase()
-                          ? FontWeight.w600
-                          : FontWeight.w400,
-                      color: widget.activeSection == item.toLowerCase()
-                          ? AppColors.primary
-                          : Theme.of(context).colorScheme.onBackground,
+              children: AppConstants.navItems
+                  .map(
+                    (item) => ListTile(
+                      title: Text(
+                        item,
+                        style: GoogleFonts.poppins(
+                          fontWeight: widget.activeSection == item.toLowerCase()
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                          color: widget.activeSection == item.toLowerCase()
+                              ? AppColors.primary
+                              : Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
+                      trailing: widget.activeSection == item.toLowerCase()
+                          ? Container(
+                              width: 8,
+                              height: 8,
+                              decoration: const BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                            )
+                          : null,
+                      onTap: () => _scrollToSection(item.toLowerCase()),
+                      dense: true,
                     ),
-                  ),
-                  trailing: widget.activeSection == item.toLowerCase()
-                      ? Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary,
-                            shape: BoxShape.circle,
-                          ),
-                        )
-                      : null,
-                  onTap: () => _scrollToSection(item.toLowerCase()),
-                  dense: true,
-                ),
-              ).toList(),
+                  )
+                  .toList(),
             ),
           ),
         ),
@@ -283,8 +284,8 @@ class _PortfolioNavbarState extends State<PortfolioNavbar>
                 height: 22,
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: AppColors.primaryGradient),
+                  gradient:
+                      const LinearGradient(colors: AppColors.primaryGradient),
                   borderRadius: BorderRadius.circular(11),
                 ),
                 child: Icon(
@@ -335,7 +336,8 @@ class _NavItemState extends State<_NavItem> {
                 widget.title,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
+                  fontWeight:
+                      widget.isActive ? FontWeight.w600 : FontWeight.w400,
                   color: widget.isActive || _isHovered
                       ? AppColors.primary
                       : Theme.of(context).colorScheme.onBackground,
@@ -347,8 +349,8 @@ class _NavItemState extends State<_NavItem> {
                 height: 2,
                 width: widget.isActive || _isHovered ? 20 : 0,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: AppColors.primaryGradient),
+                  gradient:
+                      const LinearGradient(colors: AppColors.primaryGradient),
                   borderRadius: BorderRadius.circular(1),
                 ),
               ),

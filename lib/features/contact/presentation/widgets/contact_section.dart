@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -173,20 +172,17 @@ class _ContactSectionState extends State<ContactSection> {
             children: [
               _buildSocialBtn(
                 context,
-                FontAwesomeIcons.github,
+                Icons.code,
                 'GitHub',
-                () => context
-                    .read<ContactBloc>()
-                    .add(const OpenGithubContact()),
+                () =>
+                    context.read<ContactBloc>().add(const OpenGithubContact()),
               ),
               const SizedBox(width: 12),
               _buildSocialBtn(
                 context,
-                FontAwesomeIcons.linkedin,
+                Icons.link,
                 'LinkedIn',
-                () => context
-                    .read<ContactBloc>()
-                    .add(const OpenLinkedIn()),
+                () => context.read<ContactBloc>().add(const OpenLinkedIn()),
               ),
             ],
           ),
@@ -212,8 +208,8 @@ class _ContactSectionState extends State<ContactSection> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    colors: AppColors.primaryGradient),
+                gradient:
+                    const LinearGradient(colors: AppColors.primaryGradient),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, size: 20, color: Colors.white),
@@ -244,8 +240,7 @@ class _ContactSectionState extends State<ContactSection> {
               ),
             ),
             if (onTap != null)
-              const Icon(Icons.open_in_new,
-                  size: 16, color: AppColors.primary),
+              const Icon(Icons.open_in_new, size: 16, color: AppColors.primary),
           ],
         ),
       ),
@@ -266,7 +261,7 @@ class _ContactSectionState extends State<ContactSection> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            FaIcon(icon, size: 16, color: AppColors.primary),
+            Icon(icon, size: 16, color: AppColors.primary),
             const SizedBox(width: 8),
             Text(
               label,
@@ -312,9 +307,8 @@ class _ContactSectionState extends State<ContactSection> {
                           controller: _nameCtrl,
                           label: 'Your Name',
                           icon: Icons.person_outline,
-                          validator: (v) => v?.isEmpty == true
-                              ? 'Name is required'
-                              : null,
+                          validator: (v) =>
+                              v?.isEmpty == true ? 'Name is required' : null,
                         ),
                       ),
                       const SizedBox(width: 16),

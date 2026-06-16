@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -74,14 +73,12 @@ class _HeroSectionState extends State<HeroSection>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: isDark
-              ? AppColors.heroGradientDark
-              : AppColors.heroGradientLight,
+          colors:
+              isDark ? AppColors.heroGradientDark : AppColors.heroGradientLight,
         ),
       ),
       child: Stack(
         children: [
-          // Background decorations
           Positioned(
             top: -100,
             right: -100,
@@ -97,7 +94,6 @@ class _HeroSectionState extends State<HeroSection>
             right: MediaQuery.of(context).size.width * 0.15,
             child: _buildGlowCircle(150, AppColors.accent.withOpacity(0.08)),
           ),
-          // Content
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: ResponsiveUtils.horizontalPadding(context),
@@ -107,7 +103,6 @@ class _HeroSectionState extends State<HeroSection>
                 ? _buildMobileLayout(context)
                 : _buildDesktopLayout(context, isTablet),
           ),
-          // Scroll indicator
           Positioned(
             bottom: 40,
             left: 0,
@@ -240,8 +235,7 @@ class _HeroSectionState extends State<HeroSection>
           child: Wrap(
             spacing: 16,
             runSpacing: 12,
-            alignment:
-                isMobile ? WrapAlignment.center : WrapAlignment.start,
+            alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
             children: [
               AnimatedGradientButton(
                 text: 'Download Resume',
@@ -284,9 +278,8 @@ class _HeroSectionState extends State<HeroSection>
         child: Row(
           key: ValueKey(_roleIndex),
           mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
-          mainAxisAlignment: isMobile
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
+          mainAxisAlignment:
+              isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             Container(
               width: 4,
@@ -325,7 +318,6 @@ class _HeroSectionState extends State<HeroSection>
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Outer glow ring
             Container(
               width: size + 40,
               height: size + 40,
@@ -339,13 +331,12 @@ class _HeroSectionState extends State<HeroSection>
                 ),
               ),
             ),
-            // Rotating border
             Container(
               width: size + 20,
               height: size + 20,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const SweepGradient(
+                gradient: SweepGradient(
                   colors: [
                     AppColors.primary,
                     AppColors.secondary,
@@ -357,7 +348,6 @@ class _HeroSectionState extends State<HeroSection>
             )
                 .animate(onPlay: (c) => c.repeat())
                 .rotate(duration: const Duration(seconds: 8)),
-            // Avatar
             Container(
               width: size + 10,
               height: size + 10,
@@ -369,53 +359,36 @@ class _HeroSectionState extends State<HeroSection>
             Container(
               width: size,
               height: size,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [AppColors.primary, AppColors.secondary],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
               ),
               child: ClipOval(
-                child: _buildAvatarContent(size),
+                child: Center(
+                  child: Text(
+                    'SK',
+                    style: GoogleFonts.poppins(
+                      fontSize: size * 0.3,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ),
-            // Floating tech badges
             if (!isMobile) ...[
-              _buildFloatingBadge(
-                  'Flutter', AppColors.flutterColor,
+              _buildFloatingBadge('Flutter', AppColors.flutterColor,
                   Offset(-(size / 2 + 10), -size / 6)),
-              _buildFloatingBadge(
-                  'Dart', AppColors.dartColor,
+              _buildFloatingBadge('Dart', AppColors.dartColor,
                   Offset(size / 2 + 10, -size / 6)),
-              _buildFloatingBadge(
-                  'Firebase', AppColors.firebaseColor,
+              _buildFloatingBadge('Firebase', AppColors.firebaseColor,
                   Offset(-(size / 2 - 20), size / 3)),
             ],
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAvatarContent(double size) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.primary, AppColors.secondary],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          'SK',
-          style: GoogleFonts.poppins(
-            fontSize: size * 0.3,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
         ),
       ),
     );
@@ -440,32 +413,27 @@ class _HeroSectionState extends State<HeroSection>
           ),
         ),
       ),
-    )
-        .animate(onPlay: (c) => c.repeat(reverse: true))
-        .moveY(
-            begin: 0,
-            end: -8,
-            duration: const Duration(seconds: 2),
-            curve: Curves.easeInOut);
+    ).animate(onPlay: (c) => c.repeat(reverse: true)).moveY(
+        begin: 0,
+        end: -8,
+        duration: const Duration(seconds: 2),
+        curve: Curves.easeInOut);
   }
 
   Widget _buildSocialLinks(BuildContext context, bool isMobile) {
+    // GitHub, LinkedIn, Email using Material Icons
     final socials = [
-      (FontAwesomeIcons.github, AppConstants.githubUrl, 'GitHub'),
-      (FontAwesomeIcons.linkedin, AppConstants.linkedinUrl, 'LinkedIn'),
+      (Icons.code, AppConstants.githubUrl, 'GitHub'),
+      (Icons.link, AppConstants.linkedinUrl, 'LinkedIn'),
       (Icons.email_outlined, 'mailto:${AppConstants.email}', 'Email'),
     ];
 
     return Wrap(
       spacing: 12,
       alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
-      children: socials.map((s) {
-        return _SocialButton(
-          icon: s.$1,
-          url: s.$2,
-          tooltip: s.$3,
-        );
-      }).toList(),
+      children: socials
+          .map((s) => _SocialButton(icon: s.$1, url: s.$2, tooltip: s.$3))
+          .toList(),
     );
   }
 
@@ -499,13 +467,11 @@ class _HeroSectionState extends State<HeroSection>
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(3),
               ),
-            )
-                .animate(onPlay: (c) => c.repeat())
-                .moveY(
-                    begin: -6,
-                    end: 6,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeInOut),
+            ).animate(onPlay: (c) => c.repeat()).moveY(
+                begin: -6,
+                end: 6,
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeInOut),
           ),
         ),
       ],
@@ -516,16 +482,13 @@ class _HeroSectionState extends State<HeroSection>
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
     );
   }
 }
 
 class _SocialButton extends StatefulWidget {
-  final dynamic icon;
+  final IconData icon;
   final String url;
   final String tooltip;
 
@@ -567,6 +530,7 @@ class _SocialButtonState extends State<_SocialButton> {
               ),
             ),
             child: Center(
+<<<<<<< HEAD
               child: widget.icon is FaIconData
                   ? FaIcon(
                       widget.icon as FaIconData,
@@ -578,6 +542,13 @@ class _SocialButtonState extends State<_SocialButton> {
                       size: 18,
                       color: _isHovered ? Colors.white : AppColors.primary,
                     ),
+=======
+              child: Icon(
+                widget.icon,
+                size: 18,
+                color: _isHovered ? Colors.white : AppColors.primary,
+              ),
+>>>>>>> 6dee6fe (Update dependencies and portfolio content)
             ),
           ),
         ),

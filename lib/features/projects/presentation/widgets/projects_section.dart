@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -52,7 +51,14 @@ class ProjectsSection extends StatelessWidget {
   }
 
   Widget _buildFilterChips(BuildContext context, ProjectsLoaded state) {
-    final categories = ['All', 'Mobile App', 'Web App', 'Business', 'Education', 'Coming Soon'];
+    final categories = [
+      'All',
+      'Mobile App',
+      'Web App',
+      'Business',
+      'Education',
+      'Coming Soon'
+    ];
 
     return FadeInDown(
       child: Wrap(
@@ -64,8 +70,7 @@ class ProjectsSection extends StatelessWidget {
           return _FilterChip(
             label: cat,
             isActive: isActive,
-            onTap: () =>
-                context.read<ProjectsBloc>().add(FilterProjects(cat)),
+            onTap: () => context.read<ProjectsBloc>().add(FilterProjects(cat)),
           );
         }).toList(),
       ),
@@ -198,7 +203,8 @@ class _ProjectCardState extends State<_ProjectCard> {
             children: [
               // Image
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
                 child: Stack(
                   children: [
                     Container(
@@ -274,8 +280,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color:
-                              Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onBackground,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -309,7 +314,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                         children: [
                           Expanded(
                             child: _ProjectActionButton(
-                              icon: FontAwesomeIcons.github,
+                              icon: Icons.code,
                               label: 'GitHub',
                               onTap: () => context
                                   .read<ProjectsBloc>()
@@ -323,10 +328,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                                 icon: Icons.open_in_new,
                                 label: 'Live Demo',
                                 isPrimary: true,
-                                onTap: () => context
-                                    .read<ProjectsBloc>()
-                                    .add(OpenLiveDemo(
-                                        widget.project.liveDemoUrl!)),
+                                onTap: () => context.read<ProjectsBloc>().add(
+                                    OpenLiveDemo(widget.project.liveDemoUrl!)),
                               ),
                             ),
                           ],
@@ -377,7 +380,7 @@ class _ProjectCardState extends State<_ProjectCard> {
 }
 
 class _ProjectActionButton extends StatefulWidget {
-  final dynamic icon;
+  final IconData icon;
   final String label;
   final VoidCallback onTap;
   final bool isPrimary;
@@ -423,6 +426,7 @@ class _ProjectActionButtonState extends State<_ProjectActionButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+<<<<<<< HEAD
               widget.icon is FaIconData
                 ? FaIcon(
                   widget.icon as FaIconData,
@@ -438,6 +442,15 @@ class _ProjectActionButtonState extends State<_ProjectActionButton> {
                     ? Colors.white
                     : AppColors.primary,
                 ),
+=======
+              Icon(
+                widget.icon,
+                size: 14,
+                color: (widget.isPrimary || _isHovered)
+                    ? Colors.white
+                    : AppColors.primary,
+              ),
+>>>>>>> 6dee6fe (Update dependencies and portfolio content)
               const SizedBox(width: 6),
               Text(
                 widget.label,
