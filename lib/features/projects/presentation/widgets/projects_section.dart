@@ -423,21 +423,21 @@ class _ProjectActionButtonState extends State<_ProjectActionButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.icon is IconData
-                  ? Icon(
-                      widget.icon as IconData,
-                      size: 14,
-                      color: (widget.isPrimary || _isHovered)
-                          ? Colors.white
-                          : AppColors.primary,
-                    )
-                  : FaIcon(
-                      widget.icon as IconData,
-                      size: 12,
-                      color: (widget.isPrimary || _isHovered)
-                          ? Colors.white
-                          : AppColors.primary,
-                    ),
+              widget.icon is FaIconData
+                ? FaIcon(
+                  widget.icon as FaIconData,
+                  size: 12,
+                  color: (widget.isPrimary || _isHovered)
+                    ? Colors.white
+                    : AppColors.primary,
+                )
+                : Icon(
+                  widget.icon as IconData,
+                  size: 14,
+                  color: (widget.isPrimary || _isHovered)
+                    ? Colors.white
+                    : AppColors.primary,
+                ),
               const SizedBox(width: 6),
               Text(
                 widget.label,

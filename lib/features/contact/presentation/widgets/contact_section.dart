@@ -252,8 +252,8 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildSocialBtn(
-      BuildContext context, IconData icon, String label, VoidCallback onTap) {
+    Widget _buildSocialBtn(BuildContext context, FaIconData icon, String label,
+      VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(

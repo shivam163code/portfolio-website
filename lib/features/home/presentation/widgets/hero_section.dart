@@ -567,15 +567,15 @@ class _SocialButtonState extends State<_SocialButton> {
               ),
             ),
             child: Center(
-              child: widget.icon is IconData
-                  ? Icon(
-                      widget.icon as IconData,
-                      size: 18,
+              child: widget.icon is FaIconData
+                  ? FaIcon(
+                      widget.icon as FaIconData,
+                      size: 16,
                       color: _isHovered ? Colors.white : AppColors.primary,
                     )
-                  : FaIcon(
+                  : Icon(
                       widget.icon as IconData,
-                      size: 16,
+                      size: 18,
                       color: _isHovered ? Colors.white : AppColors.primary,
                     ),
             ),

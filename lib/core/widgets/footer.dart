@@ -247,9 +247,9 @@ class PortfolioFooter extends StatelessWidget {
           border: Border.all(color: AppColors.primary.withOpacity(0.2)),
         ),
         child: Center(
-          child: icon is IconData
-              ? Icon(icon, size: 15, color: AppColors.primary)
-              : FaIcon(icon as IconData, size: 13, color: AppColors.primary),
+          child: icon is FaIconData
+              ? FaIcon(icon as FaIconData, size: 13, color: AppColors.primary)
+              : Icon(icon as IconData, size: 15, color: AppColors.primary),
         ),
       ),
     );
