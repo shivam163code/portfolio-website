@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "Flutter & Dart - The Complete Guide",
+    "organization": "Udemy",
+    "issueDate": "January 2024",
+    "expiryDate": null,
+    "certificateUrl": "https://udemy.com/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "UC-flutter-dart-2024"
+  },
+  {
+    "id": "2",
+    "name": "Firebase for Flutter",
+    "organization": "Google Developers",
+    "issueDate": "March 2024",
+    "expiryDate": null,
+    "certificateUrl": "https://developers.google.com/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "GD-firebase-flutter-2024"
+  },
+  {
+    "id": "3",
+    "name": "Python Programming Masterclass",
+    "organization": "Coursera",
+    "issueDate": "June 2023",
+    "expiryDate": null,
+    "certificateUrl": "https://coursera.org/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "COURSERA-PY-2023"
+  },
+  {
+    "id": "4",
+    "name": "Git & GitHub Complete Course",
+    "organization": "LinkedIn Learning",
+    "issueDate": "August 2023",
+    "expiryDate": null,
+    "certificateUrl": "https://linkedin.com/learning/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "LI-GIT-2023"
+  },
+  {
+    "id": "5",
+    "name": "Java Programming Fundamentals",
+    "organization": "NPTEL",
+    "issueDate": "October 2023",
+    "expiryDate": null,
+    "certificateUrl": "https://nptel.ac.in/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "NPTEL-JAVA-2023"
+  },
+  {
+    "id": "6",
+    "name": "REST API Development",
+    "organization": "Postman",
+    "issueDate": "December 2023",
+    "expiryDate": null,
+    "certificateUrl": "https://badgr.com/certificate/sample",
+    "imageUrl": "assets/images/cert_placeholder.png",
+    "credentialId": "POSTMAN-API-2023"
+  }
+]
