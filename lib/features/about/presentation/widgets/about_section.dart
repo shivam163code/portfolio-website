@@ -70,7 +70,6 @@ class AboutSection extends StatelessWidget {
   }
 
   Widget _buildInfoCard(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return FadeInLeft(
       duration: const Duration(milliseconds: 600),
@@ -97,14 +96,22 @@ class AboutSection extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Center(
-                    child: Text(
-                      'SK',
-                      style: GoogleFonts.poppins(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                      ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      AppConstants.profileImage,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                          child: Text(
+                            'SK',
+                            style: GoogleFonts.poppins(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),

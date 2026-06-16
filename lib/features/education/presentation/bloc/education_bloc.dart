@@ -28,20 +28,20 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
     EducationModel(
       id: '2',
       level: '12th',
-      instituteName: 'Government Senior Secondary School',
+      instituteName: 'Asha modern international school',
       board: 'CBSE',
       year: '2021 – 2022',
-      percentage: '85%',
+      percentage: '76%',
       description:
-          'Completed Class 12 with Science stream (PCM + Computer Science). Achieved excellent results with strong foundation in Mathematics and CS.',
+          'Completed Class 12 with Science stream (PCM). Achieved excellent results with strong foundation in Mathematics.',
     ),
     EducationModel(
       id: '3',
       level: '10th',
-      instituteName: 'Government High School',
+      instituteName: 'Asha modern international school',
       board: 'CBSE',
       year: '2019 – 2020',
-      percentage: '88%',
+      percentage: '84.4%',
       description:
           'Completed Class 10 with distinction. Strong performance across all subjects with particular aptitude in Mathematics and Science.',
     ),

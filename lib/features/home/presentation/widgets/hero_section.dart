@@ -301,12 +301,16 @@ class _HeroSectionState extends State<HeroSection>
               ),
             ),
             const SizedBox(width: 12),
-            Text(
-              _roles[_roleIndex],
-              style: GoogleFonts.poppins(
-                fontSize: isMobile ? 16 : 20,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primary,
+            Flexible(
+              child: Text(
+                _roles[_roleIndex],
+                style: GoogleFonts.poppins(
+                  fontSize: isMobile ? 16 : 20,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
           ],
@@ -400,24 +404,32 @@ class _HeroSectionState extends State<HeroSection>
   }
 
   Widget _buildAvatarContent(double size) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.primary, AppColors.secondary],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          'SK',
-          style: GoogleFonts.poppins(
-            fontSize: size * 0.3,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
+    return Image.asset(
+      AppConstants.profileImage,
+      fit: BoxFit.cover,
+      width: size,
+      height: size,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.primary, AppColors.secondary],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
-        ),
-      ),
+          child: Center(
+            child: Text(
+              'SK',
+              style: GoogleFonts.poppins(
+                fontSize: size * 0.3,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

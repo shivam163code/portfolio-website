@@ -62,19 +62,20 @@ class EducationSection extends StatelessWidget {
         final edu = educations[index];
         final isFirst = index == 0;
         final isLast = index == educations.length - 1;
+        final isMobile = ResponsiveUtils.isMobile(context);
 
         return FadeInUp(
           delay: Duration(milliseconds: index * 200),
           child: TimelineTile(
             axis: TimelineAxis.vertical,
             alignment: TimelineAlign.manual,
-            lineXY: 0.1,
+            lineXY: isMobile ? 0.07 : 0.1,
             isFirst: isFirst,
             isLast: isLast,
             indicatorStyle: IndicatorStyle(
-              width: 50,
-              height: 50,
-              indicator: _buildIndicator(context, edu),
+              width: isMobile ? 36 : 50,
+              height: isMobile ? 36 : 50,
+              indicator: _buildIndicator(context, edu, isMobile),
             ),
             beforeLineStyle: const LineStyle(
               color: AppColors.primary,
@@ -85,7 +86,7 @@ class EducationSection extends StatelessWidget {
               thickness: 2,
             ),
             endChild: Padding(
-              padding: const EdgeInsets.only(left: 24, bottom: 32),
+              padding: EdgeInsets.only(left: isMobile ? 12 : 24, bottom: 32),
               child: _EducationCard(education: edu),
             ),
           ),
@@ -94,7 +95,7 @@ class EducationSection extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicator(BuildContext context, EducationModel edu) {
+  Widget _buildIndicator(BuildContext context, EducationModel edu, bool isMobile) {
     return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -106,7 +107,7 @@ class EducationSection extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withOpacity(0.4),
-            blurRadius: 10,
+            blurRadius: isMobile ? 6 : 10,
             offset: const Offset(0, 4),
           ),
         ],
@@ -115,7 +116,7 @@ class EducationSection extends StatelessWidget {
         child: Text(
           _getLevelShorthand(edu.level),
           style: GoogleFonts.poppins(
-            fontSize: 11,
+            fontSize: isMobile ? 9 : 11,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
@@ -275,11 +276,14 @@ class _EducationCardState extends State<_EducationCard> {
                       size: 14,
                       color: Theme.of(context).colorScheme.onSurface),
                   const SizedBox(width: 6),
-                  Text(
-                    widget.education.board,
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: Theme.of(context).colorScheme.onSurface,
+                  Expanded(
+                    child: Text(
+                      widget.education.board,
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

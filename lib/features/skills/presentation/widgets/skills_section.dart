@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -48,7 +48,7 @@ class SkillsSection extends StatelessWidget {
           if (state is SkillsLoading)
             const Center(child: CircularProgressIndicator())
           else if (state is SkillsLoaded)
-            _buildSkillsGrid(context, state.categories)
+            _SkillsSlider(categories: state.categories)
           else
             const SizedBox.shrink(),
         ],
@@ -56,55 +56,151 @@ class SkillsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillsGrid(BuildContext context, List<SkillCategory> categories) {
-    final isMobile = ResponsiveUtils.isMobile(context);
+}
 
-    if (isMobile) {
-      return AnimationLimiter(
-        child: Column(
-          children: List.generate(categories.length, (index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 500),
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: _SkillCategoryCard(category: categories[index]),
-                  ),
-                ),
-              ),
-            );
-          }),
-        ),
-      );
+class _SkillsSlider extends StatefulWidget {
+  final List<SkillCategory> categories;
+
+  const _SkillsSlider({required this.categories});
+
+  @override
+  State<_SkillsSlider> createState() => _SkillsSliderState();
+}
+
+class _SkillsSliderState extends State<_SkillsSlider> {
+  late PageController _pageController;
+  int _currentPage = 0;
+  Timer? _timer;
+  bool _isHovered = false;
+  int _totalPages = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startTimer();
+    });
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (!_isHovered && mounted && _totalPages > 1) {
+        final nextPage = (_currentPage + 1) % _totalPages;
+        _pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = ResponsiveUtils.isMobile(context);
+    final int itemsPerPage = isMobile ? 1 : 2;
+
+    final List<List<SkillCategory>> pages = [];
+    for (var i = 0; i < widget.categories.length; i += itemsPerPage) {
+      final end = (i + itemsPerPage < widget.categories.length)
+          ? i + itemsPerPage
+          : widget.categories.length;
+      pages.add(widget.categories.sublist(i, end));
     }
 
-    final crossAxisCount = ResponsiveUtils.isTablet(context) ? 2 : 3;
-    return AnimationLimiter(
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          crossAxisSpacing: 24,
-          mainAxisSpacing: 24,
-          childAspectRatio: 1.05,
-        ),
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          return AnimationConfiguration.staggeredGrid(
-            position: index,
-            duration: const Duration(milliseconds: 500),
-            columnCount: crossAxisCount,
-            child: ScaleAnimation(
-              child: FadeInAnimation(
-                child: _SkillCategoryCard(category: categories[index]),
-              ),
+    _totalPages = pages.length;
+    if (_currentPage >= _totalPages) {
+      _currentPage = _totalPages - 1;
+    }
+    if (_currentPage < 0) {
+      _currentPage = 0;
+    }
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Column(
+        children: [
+          SizedBox(
+            height: isMobile ? 350 : 400,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: pages.length,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              itemBuilder: (context, pageIndex) {
+                final pageItems = pages[pageIndex];
+                if (isMobile) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: _SkillCategoryCard(category: pageItems[0]),
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: _SkillCategoryCard(category: pageItems[0]),
+                        ),
+                        const SizedBox(width: 24),
+                        Expanded(
+                          child: pageItems.length > 1
+                              ? _SkillCategoryCard(category: pageItems[1])
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
-          );
-        },
+          ),
+          const SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(pages.length, (index) {
+              final isActive = _currentPage == index;
+              return GestureDetector(
+                onTap: () {
+                  _pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                  width: isActive ? 24 : 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    gradient: isActive
+                        ? const LinearGradient(colors: AppColors.primaryGradient)
+                        : null,
+                    color: isActive
+                        ? null
+                        : Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }

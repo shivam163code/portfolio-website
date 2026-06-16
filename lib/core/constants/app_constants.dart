@@ -1,6 +1,7 @@
 class AppConstants {
   // Personal Info
   static const String name = 'Shivam Kumar';
+  static const String profileImage = 'assets/images/profile.jpg';
   static const String title = 'Flutter Developer | Mobile App Developer | Software Developer';
   static const String shortTitle = 'Flutter Developer';
   static const String email = 'shivamkumar71964@gmail.com';
