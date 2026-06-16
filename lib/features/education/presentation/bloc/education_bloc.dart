@@ -19,7 +19,7 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
       instituteName: 'CGC Jhanjeri',
       board: 'Punjab Technical University (PTU)',
       year: '2022 – Present',
-      cgpa: '8.2',
+      cgpa: '7.8',
       currentSemester: '7th Semester',
       currentYear: '4th Year',
       description:

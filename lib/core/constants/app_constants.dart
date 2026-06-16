@@ -3,19 +3,21 @@ class AppConstants {
   static const String name = 'Shivam Kumar';
   static const String title = 'Flutter Developer | Mobile App Developer | Software Developer';
   static const String shortTitle = 'Flutter Developer';
-  static const String email = 'shivamkumar@example.com';
-  static const String phone = '+91 9876543210';
+  static const String email = 'shivamkumar71964@gmail.com';
+  static const String phone = '+91 7351908322';
   static const String location = 'Chandigarh, India';
   static const String college = 'CGC Jhanjeri';
   static const String degree = 'B.Tech CSE';
   static const String currentYear = '4th Year';
   static const String currentSemester = '7th Semester';
-  static const String cgpa = '8.2';
+  static const String cgpa = '7.8';
 
   // Social Links
-  static const String githubUrl = 'https://github.com/shivamkumar';
-  static const String linkedinUrl = 'https://linkedin.com/in/shivamkumar';
-  static const String resumeUrl = 'https://drive.google.com/file/d/your-resume-id/view';
+  static const String githubUrl = 'https://github.com/shivam163code';
+  static const String linkedinUrl =
+      'https://www.linkedin.com/in/shivam-kumar-4a536a299?utm_source=share_via&utm_content=profile&utm_medium=member_android';
+  static const String resumeUrl =
+      'https://drive.google.com/file/d/1CrCnRAWMz9lCYekohrfKDjmFhsuCmsp5/view?usp=sharing';
 
   // About
   static const String aboutText =
