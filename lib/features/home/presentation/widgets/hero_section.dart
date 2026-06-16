@@ -530,25 +530,11 @@ class _SocialButtonState extends State<_SocialButton> {
               ),
             ),
             child: Center(
-<<<<<<< HEAD
-              child: widget.icon is FaIconData
-                  ? FaIcon(
-                      widget.icon as FaIconData,
-                      size: 16,
-                      color: _isHovered ? Colors.white : AppColors.primary,
-                    )
-                  : Icon(
-                      widget.icon as IconData,
-                      size: 18,
-                      color: _isHovered ? Colors.white : AppColors.primary,
-                    ),
-=======
               child: Icon(
                 widget.icon,
                 size: 18,
                 color: _isHovered ? Colors.white : AppColors.primary,
               ),
->>>>>>> 6dee6fe (Update dependencies and portfolio content)
             ),
           ),
         ),

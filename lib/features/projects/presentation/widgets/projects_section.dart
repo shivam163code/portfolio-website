@@ -426,23 +426,6 @@ class _ProjectActionButtonState extends State<_ProjectActionButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-<<<<<<< HEAD
-              widget.icon is FaIconData
-                ? FaIcon(
-                  widget.icon as FaIconData,
-                  size: 12,
-                  color: (widget.isPrimary || _isHovered)
-                    ? Colors.white
-                    : AppColors.primary,
-                )
-                : Icon(
-                  widget.icon as IconData,
-                  size: 14,
-                  color: (widget.isPrimary || _isHovered)
-                    ? Colors.white
-                    : AppColors.primary,
-                ),
-=======
               Icon(
                 widget.icon,
                 size: 14,
@@ -450,7 +433,6 @@ class _ProjectActionButtonState extends State<_ProjectActionButton> {
                     ? Colors.white
                     : AppColors.primary,
               ),
->>>>>>> 6dee6fe (Update dependencies and portfolio content)
               const SizedBox(width: 6),
               Text(
                 widget.label,
