@@ -74,8 +74,34 @@ class ProjectsSection extends StatelessWidget {
 
   Widget _buildProjectsGrid(BuildContext context, List<ProjectModel> projects) {
     final isMobile = ResponsiveUtils.isMobile(context);
+
+    if (isMobile) {
+      return AnimationLimiter(
+        child: Column(
+          children: List.generate(projects.length, (index) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 500),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: _ProjectCard(project: projects[index]),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    }
+
     final isTablet = ResponsiveUtils.isTablet(context);
-    final crossAxisCount = isMobile ? 1 : (isTablet ? 2 : 3);
+    final crossAxisCount = isTablet ? 2 : 3;
 
     return AnimationLimiter(
       child: GridView.builder(
@@ -85,7 +111,7 @@ class ProjectsSection extends StatelessWidget {
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: 24,
           mainAxisSpacing: 24,
-          childAspectRatio: isMobile ? 1.2 : 0.85,
+          childAspectRatio: 0.85,
         ),
         itemCount: projects.length,
         itemBuilder: (context, index) {
@@ -183,7 +209,87 @@ class _ProjectCardState extends State<_ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = ResponsiveUtils.isMobile(context);
+
+    final cardContent = Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            widget.project.name,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 8),
+          isMobile
+              ? Text(
+                  widget.project.shortDescription,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    height: 1.5,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                )
+              : Expanded(
+                  child: Text(
+                    widget.project.shortDescription,
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      height: 1.5,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+          const SizedBox(height: 12),
+          // Tech chips
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: widget.project.technologies
+                .take(3)
+                .map((tech) => _buildTechChip(tech))
+                .toList(),
+          ),
+          const SizedBox(height: 12),
+          // Action buttons
+          Row(
+            children: [
+              Expanded(
+                child: _ProjectActionButton(
+                  icon: FontAwesomeIcons.github,
+                  label: 'GitHub',
+                  onTap: () => context
+                      .read<ProjectsBloc>()
+                      .add(OpenGithub(widget.project.githubUrl)),
+                ),
+              ),
+              if (widget.project.liveDemoUrl != null) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _ProjectActionButton(
+                    icon: Icons.open_in_new,
+                    label: 'Live Demo',
+                    isPrimary: true,
+                    onTap: () => context
+                        .read<ProjectsBloc>()
+                        .add(OpenLiveDemo(widget.project.liveDemoUrl!)),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -195,6 +301,7 @@ class _ProjectCardState extends State<_ProjectCard> {
           padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Image
               ClipRRect(
@@ -263,79 +370,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                 ),
               ),
               // Content
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.project.name,
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color:
-                              Theme.of(context).colorScheme.onBackground,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      Expanded(
-                        child: Text(
-                          widget.project.shortDescription,
-                          style: GoogleFonts.inter(
-                            fontSize: 13,
-                            height: 1.5,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      // Tech chips
-                      Wrap(
-                        spacing: 6,
-                        runSpacing: 6,
-                        children: widget.project.technologies
-                            .take(3)
-                            .map((tech) => _buildTechChip(tech))
-                            .toList(),
-                      ),
-                      const SizedBox(height: 12),
-                      // Action buttons
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _ProjectActionButton(
-                              icon: FontAwesomeIcons.github,
-                              label: 'GitHub',
-                              onTap: () => context
-                                  .read<ProjectsBloc>()
-                                  .add(OpenGithub(widget.project.githubUrl)),
-                            ),
-                          ),
-                          if (widget.project.liveDemoUrl != null) ...[
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: _ProjectActionButton(
-                                icon: Icons.open_in_new,
-                                label: 'Live Demo',
-                                isPrimary: true,
-                                onTap: () => context
-                                    .read<ProjectsBloc>()
-                                    .add(OpenLiveDemo(
-                                        widget.project.liveDemoUrl!)),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              isMobile ? cardContent : Expanded(child: cardContent),
             ],
           ),
         ),

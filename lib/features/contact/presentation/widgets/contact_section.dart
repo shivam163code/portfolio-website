@@ -304,38 +304,67 @@ class _ContactSectionState extends State<ContactSection> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildTextField(
-                          context,
-                          controller: _nameCtrl,
-                          label: 'Your Name',
-                          icon: Icons.person_outline,
-                          validator: (v) => v?.isEmpty == true
-                              ? 'Name is required'
-                              : null,
+                  ResponsiveUtils.isMobile(context)
+                      ? Column(
+                          children: [
+                            _buildTextField(
+                              context,
+                              controller: _nameCtrl,
+                              label: 'Your Name',
+                              icon: Icons.person_outline,
+                              validator: (v) => v?.isEmpty == true
+                                  ? 'Name is required'
+                                  : null,
+                            ),
+                            const SizedBox(height: 16),
+                            _buildTextField(
+                              context,
+                              controller: _emailCtrl,
+                              label: 'Email Address',
+                              icon: Icons.email_outlined,
+                              validator: (v) {
+                                if (v?.isEmpty == true) return 'Email is required';
+                                if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                    .hasMatch(v!)) {
+                                  return 'Invalid email';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Expanded(
+                              child: _buildTextField(
+                                context,
+                                controller: _nameCtrl,
+                                label: 'Your Name',
+                                icon: Icons.person_outline,
+                                validator: (v) => v?.isEmpty == true
+                                    ? 'Name is required'
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: _buildTextField(
+                                context,
+                                controller: _emailCtrl,
+                                label: 'Email Address',
+                                icon: Icons.email_outlined,
+                                validator: (v) {
+                                  if (v?.isEmpty == true) return 'Email is required';
+                                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                      .hasMatch(v!)) {
+                                    return 'Invalid email';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: _buildTextField(
-                          context,
-                          controller: _emailCtrl,
-                          label: 'Email Address',
-                          icon: Icons.email_outlined,
-                          validator: (v) {
-                            if (v?.isEmpty == true) return 'Email is required';
-                            if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                .hasMatch(v!)) {
-                              return 'Invalid email';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 16),
                   _buildTextField(
                     context,

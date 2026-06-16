@@ -76,7 +76,7 @@ class _PortfolioNavbarState extends State<PortfolioNavbar>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveUtils.isMobile(context);
+    final isDesktop = ResponsiveUtils.isDesktop(context);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
@@ -114,9 +114,9 @@ class _PortfolioNavbarState extends State<PortfolioNavbar>
               horizontal: ResponsiveUtils.horizontalPadding(context),
               vertical: 16,
             ),
-            child: isMobile
-                ? _buildMobileNav(context, isDark)
-                : _buildDesktopNav(context, isDark),
+            child: isDesktop
+                ? _buildDesktopNav(context, isDark)
+                : _buildMobileNav(context, isDark),
           ),
         ),
       ),

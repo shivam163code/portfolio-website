@@ -58,8 +58,30 @@ class SkillsSection extends StatelessWidget {
 
   Widget _buildSkillsGrid(BuildContext context, List<SkillCategory> categories) {
     final isMobile = ResponsiveUtils.isMobile(context);
-    final crossAxisCount = isMobile ? 1 : (ResponsiveUtils.isTablet(context) ? 2 : 3);
 
+    if (isMobile) {
+      return AnimationLimiter(
+        child: Column(
+          children: List.generate(categories.length, (index) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 500),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: _SkillCategoryCard(category: categories[index]),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    }
+
+    final crossAxisCount = ResponsiveUtils.isTablet(context) ? 2 : 3;
     return AnimationLimiter(
       child: GridView.builder(
         shrinkWrap: true,
@@ -68,7 +90,7 @@ class SkillsSection extends StatelessWidget {
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: 24,
           mainAxisSpacing: 24,
-          childAspectRatio: isMobile ? 1.3 : 1.0,
+          childAspectRatio: 1.05,
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
@@ -120,13 +142,13 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
           duration: const Duration(milliseconds: 300),
           transform: Matrix4.translationValues(0, _isHovered ? -6.0 : 0.0, 0),
           child: GlassCard(
-            padding: const EdgeInsets.all(24),
             borderColor: _isHovered ? color.withOpacity(0.4) : null,
             backgroundColor: isDark
                 ? Colors.white.withOpacity(_isHovered ? 0.08 : 0.04)
                 : Colors.white.withOpacity(_isHovered ? 0.9 : 0.7),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: [
@@ -157,19 +179,12 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: widget.category.skills.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final skill = widget.category.skills[index];
-                      return _buildSkillBar(
-                          context, skill, color, _isVisible);
-                    },
-                  ),
-                ),
+                ...widget.category.skills.map((skill) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _buildSkillBar(context, skill, color, _isVisible),
+                  );
+                }).toList(),
               ],
             ),
           ),

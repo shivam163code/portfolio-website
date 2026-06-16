@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_constants.dart';
+import '../utils/responsive_utils.dart';
 import '../utils/url_launcher_utils.dart';
 
 class PortfolioFooter extends StatelessWidget {
@@ -13,6 +14,7 @@ class PortfolioFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDesktop = ResponsiveUtils.isDesktop(context);
 
     return Container(
       width: double.infinity,
@@ -27,48 +29,93 @@ class PortfolioFooter extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Column(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(flex: 3, child: _buildBrand(context)),
-              Expanded(flex: 2, child: _buildQuickLinks(context)),
-              Expanded(flex: 2, child: _buildContact(context)),
-            ],
-          ),
+          isDesktop
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 3, child: _buildBrand(context)),
+                    Expanded(flex: 2, child: _buildQuickLinks(context)),
+                    Expanded(flex: 2, child: _buildContact(context)),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildBrand(context),
+                    const SizedBox(height: 32),
+                    _buildQuickLinks(context),
+                    const SizedBox(height: 32),
+                    _buildContact(context),
+                  ],
+                ),
           const SizedBox(height: 32),
           const Divider(),
           const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '© ${DateTime.now().year} ${AppConstants.name}. All rights reserved.',
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  color: Theme.of(context).colorScheme.onSurface,
+          isDesktop
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '© ${DateTime.now().year} ${AppConstants.name}. All rights reserved.',
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Made with ',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        const Icon(Icons.favorite, size: 14, color: AppColors.accent),
+                        Text(
+                          ' using Flutter',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Column(
+                  children: [
+                    Text(
+                      '© ${DateTime.now().year} ${AppConstants.name}. All rights reserved.',
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Made with ',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        const Icon(Icons.favorite, size: 14, color: AppColors.accent),
+                        Text(
+                          ' using Flutter',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Made with ',
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                  const Icon(Icons.favorite, size: 14, color: AppColors.accent),
-                  Text(
-                    ' using Flutter',
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
         ],
       ),
     );

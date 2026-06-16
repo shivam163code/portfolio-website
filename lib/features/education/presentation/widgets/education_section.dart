@@ -154,6 +154,51 @@ class _EducationCardState extends State<_EducationCard> {
   @override
   Widget build(BuildContext context) {
     final isCurrent = widget.education.level == 'btech';
+    final isMobile = ResponsiveUtils.isMobile(context);
+
+    final titleWidget = Text(
+      _getLevelTitle(widget.education.level),
+      style: GoogleFonts.poppins(
+        fontSize: isMobile ? 16 : 18,
+        fontWeight: FontWeight.w700,
+        color: Theme.of(context).colorScheme.onBackground,
+      ),
+    );
+
+    final currentBadge = isCurrent
+        ? Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: AppColors.primaryGradient),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              'Current',
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          )
+        : const SizedBox.shrink();
+
+    final yearBadge = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+      ),
+      child: Text(
+        widget.education.year,
+        style: GoogleFonts.inter(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primary,
+        ),
+      ),
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -168,79 +213,61 @@ class _EducationCardState extends State<_EducationCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              _getLevelTitle(widget.education.level),
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onBackground,
-                              ),
-                            ),
-                            if (isCurrent) ...[
-                              const SizedBox(width: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                      colors: AppColors.primaryGradient),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  'Current',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          widget.education.instituteName,
-                          style: GoogleFonts.inter(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
+              if (isMobile) ...[
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    titleWidget,
+                    if (isCurrent) currentBadge,
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  widget.education.instituteName,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                          color: AppColors.primary.withOpacity(0.2)),
-                    ),
-                    child: Text(
-                      widget.education.year,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                ),
+                const SizedBox(height: 8),
+                yearBadge,
+              ] else ...[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(child: titleWidget),
+                              if (isCurrent) ...[
+                                const SizedBox(width: 10),
+                                currentBadge,
+                              ],
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            widget.education.instituteName,
+                            style: GoogleFonts.inter(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 16),
+                    yearBadge,
+                  ],
+                ),
+              ],
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -294,7 +321,9 @@ class _EducationCardState extends State<_EducationCard> {
               ),
               if (widget.education.marksheetUrl != null) ...[
                 const SizedBox(height: 16),
-                Row(
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 8,
                   children: [
                     OutlinedButton.icon(
                       onPressed: () => context
@@ -309,7 +338,6 @@ class _EducationCardState extends State<_EducationCard> {
                         textStyle: GoogleFonts.inter(fontSize: 13),
                       ),
                     ),
-                    const SizedBox(width: 12),
                     OutlinedButton.icon(
                       onPressed: () => context
                           .read<EducationBloc>()

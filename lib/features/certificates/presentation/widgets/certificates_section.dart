@@ -51,8 +51,34 @@ class CertificatesSection extends StatelessWidget {
   Widget _buildCertificatesGrid(
       BuildContext context, List<CertificateModel> certificates) {
     final isMobile = ResponsiveUtils.isMobile(context);
+
+    if (isMobile) {
+      return AnimationLimiter(
+        child: Column(
+          children: List.generate(certificates.length, (index) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 500),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: _CertificateCard(certificate: certificates[index]),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    }
+
     final isTablet = ResponsiveUtils.isTablet(context);
-    final crossAxisCount = isMobile ? 1 : (isTablet ? 2 : 3);
+    final crossAxisCount = isTablet ? 2 : 3;
 
     return AnimationLimiter(
       child: GridView.builder(
@@ -62,7 +88,7 @@ class CertificatesSection extends StatelessWidget {
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: 24,
           mainAxisSpacing: 24,
-          childAspectRatio: isMobile ? 1.5 : 1.1,
+          childAspectRatio: 1.15,
         ),
         itemCount: certificates.length,
         itemBuilder: (context, index) {
@@ -96,6 +122,107 @@ class _CertificateCardState extends State<_CertificateCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveUtils.isMobile(context);
+
+    final cardContent = Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            widget.certificate.name,
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.business_outlined,
+                    size: 12, color: AppColors.primary),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  widget.certificate.organization,
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Icon(Icons.calendar_today_outlined,
+                  size: 12,
+                  color: Theme.of(context).colorScheme.onSurface),
+              const SizedBox(width: 6),
+              Text(
+                widget.certificate.issueDate,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          isMobile ? const SizedBox(height: 16) : const Spacer(),
+          // Action buttons
+          Row(
+            children: [
+              Expanded(
+                child: _buildActionBtn(
+                  context,
+                  Icons.visibility_outlined,
+                  'View',
+                  () {
+                    if (widget.certificate.certificateUrl != null) {
+                      context.read<CertificateBloc>().add(
+                          OpenCertificate(
+                              widget.certificate.certificateUrl!));
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _buildActionBtn(
+                  context,
+                  Icons.download_outlined,
+                  'Download',
+                  () {
+                    if (widget.certificate.certificateUrl != null) {
+                      context.read<CertificateBloc>().add(
+                          OpenCertificate(
+                              widget.certificate.certificateUrl!));
+                    }
+                  },
+                  isPrimary: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -107,6 +234,7 @@ class _CertificateCardState extends State<_CertificateCard> {
           borderColor: _isHovered ? AppColors.primary.withOpacity(0.4) : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Certificate image/preview
               ClipRRect(
@@ -173,105 +301,7 @@ class _CertificateCardState extends State<_CertificateCard> {
                 ),
               ),
               // Content
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.certificate.name,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(Icons.business_outlined,
-                                size: 12, color: AppColors.primary),
-                          ),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              widget.certificate.organization,
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.primary,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(Icons.calendar_today_outlined,
-                              size: 12,
-                              color: Theme.of(context).colorScheme.onSurface),
-                          const SizedBox(width: 6),
-                          Text(
-                            widget.certificate.issueDate,
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      // Action buttons
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildActionBtn(
-                              context,
-                              Icons.visibility_outlined,
-                              'View',
-                              () {
-                                if (widget.certificate.certificateUrl != null) {
-                                  context.read<CertificateBloc>().add(
-                                      OpenCertificate(
-                                          widget.certificate.certificateUrl!));
-                                }
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: _buildActionBtn(
-                              context,
-                              Icons.download_outlined,
-                              'Download',
-                              () {
-                                if (widget.certificate.certificateUrl != null) {
-                                  context.read<CertificateBloc>().add(
-                                      OpenCertificate(
-                                          widget.certificate.certificateUrl!));
-                                }
-                              },
-                              isPrimary: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              isMobile ? cardContent : Expanded(child: cardContent),
             ],
           ),
         ),

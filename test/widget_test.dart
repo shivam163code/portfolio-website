@@ -4,6 +4,8 @@ import 'package:portfolio_website/main.dart';
 void main() {
   testWidgets('Portfolio app smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const PortfolioApp());
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
     expect(find.byType(PortfolioApp), findsOneWidget);
   });
 }
