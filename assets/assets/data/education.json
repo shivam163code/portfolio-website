@@ -1,0 +1,41 @@
+[
+  {
+    "id": "1",
+    "level": "btech",
+    "instituteName": "CGC Jhanjeri",
+    "board": "Punjab Technical University (PTU)",
+    "year": "2022 – Present",
+    "percentage": null,
+    "cgpa": "8.2",
+    "currentSemester": "7th Semester",
+    "currentYear": "4th Year",
+    "marksheetUrl": null,
+    "description": "Bachelor of Technology in Computer Science Engineering. Specializing in software development, data structures, algorithms, and mobile application development. Active participant in college tech fests and coding competitions."
+  },
+  {
+    "id": "2",
+    "level": "12th",
+    "instituteName": "Government Senior Secondary School",
+    "board": "CBSE",
+    "year": "2021 – 2022",
+    "percentage": "85%",
+    "cgpa": null,
+    "currentSemester": null,
+    "currentYear": null,
+    "marksheetUrl": null,
+    "description": "Completed Class 12 with Science stream (Physics, Chemistry, Mathematics, Computer Science). Achieved excellent results with strong foundation in Mathematics and Computer Science."
+  },
+  {
+    "id": "3",
+    "level": "10th",
+    "instituteName": "Government High School",
+    "board": "CBSE",
+    "year": "2019 – 2020",
+    "percentage": "88%",
+    "cgpa": null,
+    "currentSemester": null,
+    "currentYear": null,
+    "marksheetUrl": null,
+    "description": "Completed Class 10 with distinction. Demonstrated strong performance across all subjects with particular aptitude in Mathematics and Science."
+  }
+]

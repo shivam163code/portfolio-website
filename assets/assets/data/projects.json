@@ -1,0 +1,86 @@
+[
+  {
+    "id": "1",
+    "name": "E-Waste Facility Locator",
+    "description": "A Flutter mobile application that helps users locate nearby e-waste recycling facilities. The app uses GPS to find user location and displays nearby e-waste centers on an interactive map. Features include facility details, directions, and user reviews.",
+    "shortDescription": "Locate nearby e-waste recycling facilities with GPS and interactive maps.",
+    "technologies": ["Flutter", "Dart", "Google Maps API", "Firebase", "GPS"],
+    "githubUrl": "https://github.com/shivamkumar/ewaste-locator",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Mobile App",
+    "isFeatured": true
+  },
+  {
+    "id": "2",
+    "name": "Dream Journal Analyzer",
+    "description": "An intelligent dream journal app built with Flutter that allows users to record, analyze, and gain insights from their dreams. Uses NLP techniques to identify patterns and themes in dream entries. Features mood tracking and statistical analysis.",
+    "shortDescription": "Record and analyze dreams with AI-powered pattern recognition and insights.",
+    "technologies": ["Flutter", "Dart", "Python", "Firebase", "ML Kit"],
+    "githubUrl": "https://github.com/shivamkumar/dream-journal",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Mobile App",
+    "isFeatured": true
+  },
+  {
+    "id": "3",
+    "name": "Inventory Management System",
+    "description": "A comprehensive inventory management system for small businesses. Features include product tracking, stock alerts, sales reporting, and multi-user support. Built with Flutter for cross-platform compatibility and Firebase for real-time sync.",
+    "shortDescription": "Complete inventory tracking solution with real-time sync and analytics.",
+    "technologies": ["Flutter", "Dart", "Firebase", "Firestore", "Charts"],
+    "githubUrl": "https://github.com/shivamkumar/inventory-management",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Business",
+    "isFeatured": true
+  },
+  {
+    "id": "4",
+    "name": "Music Player App",
+    "description": "A feature-rich music player application with a beautiful UI. Supports local music playback, playlist management, equalizer settings, and lyrics display. Features smooth animations and a modern glassmorphism design.",
+    "shortDescription": "Beautiful music player with equalizer, playlists, and lyrics support.",
+    "technologies": ["Flutter", "Dart", "just_audio", "audio_service"],
+    "githubUrl": "https://github.com/shivamkumar/music-player",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Mobile App",
+    "isFeatured": false
+  },
+  {
+    "id": "5",
+    "name": "Educational Notes App",
+    "description": "A student-focused notes app for organizing study materials. Features include note creation with rich text editor, subject categorization, PDF export, and cloud sync. Helps students manage their academic content efficiently.",
+    "shortDescription": "Smart notes app for students with rich text editing and PDF export.",
+    "technologies": ["Flutter", "Dart", "Firebase", "Hive", "PDF"],
+    "githubUrl": "https://github.com/shivamkumar/edu-notes",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Education",
+    "isFeatured": false
+  },
+  {
+    "id": "6",
+    "name": "Snack Ordering Website",
+    "description": "A responsive web application for ordering snacks and food items online. Features product browsing, cart management, order tracking, and secure payment integration. Built with Flutter Web for a seamless cross-platform experience.",
+    "shortDescription": "Responsive food ordering platform with cart and order tracking.",
+    "technologies": ["Flutter Web", "Dart", "Firebase", "Stripe", "REST API"],
+    "githubUrl": "https://github.com/shivamkumar/snack-ordering",
+    "liveDemoUrl": "https://snack-ordering-demo.web.app",
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Web App",
+    "isFeatured": true
+  },
+  {
+    "id": "7",
+    "name": "Future Project",
+    "description": "Currently working on an exciting new project. Stay tuned for updates! This will be a cutting-edge application leveraging the latest Flutter features and modern architectural patterns.",
+    "shortDescription": "Exciting new project coming soon — stay tuned!",
+    "technologies": ["Flutter", "Dart", "Firebase"],
+    "githubUrl": "https://github.com/shivamkumar",
+    "liveDemoUrl": null,
+    "imageUrl": "assets/images/project_placeholder.png",
+    "category": "Coming Soon",
+    "isFeatured": false
+  }
+]

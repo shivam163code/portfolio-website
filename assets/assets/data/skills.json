@@ -1,0 +1,62 @@
+{
+  "categories": [
+    {
+      "id": "flutter",
+      "name": "Flutter Development",
+      "icon": "flutter",
+      "color": "#54C5F8",
+      "skills": [
+        { "name": "Flutter", "percentage": 90 },
+        { "name": "Dart", "percentage": 88 },
+        { "name": "BLoC Pattern", "percentage": 82 },
+        { "name": "Flutter Web", "percentage": 78 }
+      ]
+    },
+    {
+      "id": "languages",
+      "name": "Programming Languages",
+      "icon": "code",
+      "color": "#6C63FF",
+      "skills": [
+        { "name": "Dart", "percentage": 88 },
+        { "name": "Python", "percentage": 75 },
+        { "name": "Java", "percentage": 70 },
+        { "name": "JavaScript", "percentage": 60 }
+      ]
+    },
+    {
+      "id": "web",
+      "name": "Web Development",
+      "icon": "web",
+      "color": "#E44D26",
+      "skills": [
+        { "name": "HTML", "percentage": 80 },
+        { "name": "CSS", "percentage": 75 },
+        { "name": "Flutter Web", "percentage": 78 }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Database & Backend",
+      "icon": "database",
+      "color": "#4DB33D",
+      "skills": [
+        { "name": "Firebase", "percentage": 82 },
+        { "name": "MongoDB", "percentage": 68 },
+        { "name": "REST APIs", "percentage": 78 }
+      ]
+    },
+    {
+      "id": "tools",
+      "name": "Tools & Platforms",
+      "icon": "tools",
+      "color": "#F05032",
+      "skills": [
+        { "name": "Git", "percentage": 85 },
+        { "name": "GitHub", "percentage": 85 },
+        { "name": "VS Code", "percentage": 90 },
+        { "name": "Android Studio", "percentage": 80 }
+      ]
+    }
+  ]
+}

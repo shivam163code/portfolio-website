@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1",
+    "title": "Home Tutor",
+    "company": "Self-Employed",
+    "duration": "Jan 2022 – Present",
+    "type": "Part-time",
+    "responsibilities": [
+      "Teaching Mathematics, Science, and Computer Science to students of Classes 1–10",
+      "Creating customized study plans based on student learning pace and style",
+      "Conducting regular assessments to track student progress",
+      "Preparing students for board exams with focused revision sessions",
+      "Providing career and academic guidance to students"
+    ],
+    "skills": ["Teaching", "Communication", "Problem Solving", "Mentoring"],
+    "isCurrent": true
+  },
+  {
+    "id": "2",
+    "title": "Mathematics Teacher",
+    "company": "Private Coaching Centre",
+    "duration": "June 2022 – Dec 2022",
+    "type": "Part-time",
+    "responsibilities": [
+      "Taught Mathematics to students in Classes 6–10",
+      "Developed engaging lesson plans and teaching materials",
+      "Conducted regular doubt-clearing sessions",
+      "Achieved high student satisfaction and improved pass rates"
+    ],
+    "skills": ["Mathematics", "Teaching", "Curriculum Design", "Student Engagement"],
+    "isCurrent": false
+  },
+  {
+    "id": "3",
+    "title": "Science Teacher",
+    "company": "Community Learning Center",
+    "duration": "April 2021 – May 2022",
+    "type": "Volunteer",
+    "responsibilities": [
+      "Taught Science subjects to underprivileged students in Classes 5–8",
+      "Used innovative teaching methods to make science engaging and fun",
+      "Organized science experiments and activities",
+      "Contributed to improving learning outcomes in the community"
+    ],
+    "skills": ["Science", "Teaching", "Community Service", "Innovation"],
+    "isCurrent": false
+  }
+]
