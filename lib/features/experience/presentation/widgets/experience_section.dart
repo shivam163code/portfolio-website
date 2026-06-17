@@ -223,12 +223,13 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                 ],
               ),
               const SizedBox(height: 8),
-              Row(
+              Wrap(
+                spacing: 12,
+                runSpacing: 8,
                 children: [
                   _buildBadge(
                       Icons.calendar_today_outlined,
                       widget.experience.duration),
-                  const SizedBox(width: 12),
                   _buildBadge(
                       Icons.business_center_outlined,
                       widget.experience.type),

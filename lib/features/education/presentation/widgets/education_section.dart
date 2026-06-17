@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -26,15 +27,12 @@ class EducationSection extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, EducationState state) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = ResponsiveUtils.isMobile(context);
+    final isTablet = ResponsiveUtils.isTablet(context);
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.darkSurface.withOpacity(0.5)
-            : AppColors.lightCard,
-      ),
+      color: Colors.transparent,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.horizontalPadding(context),
         vertical: ResponsiveUtils.sectionVerticalPadding(context),
@@ -46,10 +44,43 @@ class EducationSection extends StatelessWidget {
             subtitle: 'MY JOURNEY',
           ),
           const SizedBox(height: 60),
-          if (state is EducationLoaded)
-            _buildTimeline(context, state.educations)
-          else if (state is EducationLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (state is EducationLoading)
+            const Center(child: CircularProgressIndicator())
+          else if (state is EducationLoaded)
+            isMobile || isTablet
+                ? Column(
+                    children: [
+                      Center(
+                        child: Lottie.asset(
+                          'assets/lottie/education.json',
+                          height: 200,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      _buildTimeline(context, state.educations),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: _buildTimeline(context, state.educations),
+                      ),
+                      const SizedBox(width: 40),
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: Lottie.asset(
+                            'assets/lottie/education.json',
+                            height: 350,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
         ],
       ),
     );
@@ -156,6 +187,8 @@ class _EducationCardState extends State<_EducationCard> {
   Widget build(BuildContext context) {
     final isCurrent = widget.education.level == 'btech';
     final isMobile = ResponsiveUtils.isMobile(context);
+    final isTablet = ResponsiveUtils.isTablet(context);
+    final useMobileLayout = isMobile || isTablet;
 
     final titleWidget = Text(
       _getLevelTitle(widget.education.level),
@@ -214,7 +247,7 @@ class _EducationCardState extends State<_EducationCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (isMobile) ...[
+              if (useMobileLayout) ...[
                 Wrap(
                   spacing: 10,
                   runSpacing: 8,
@@ -298,31 +331,8 @@ class _EducationCardState extends State<_EducationCard> {
                 ),
               ),
               const SizedBox(height: 16),
-              // Stats row
-              Wrap(
-                spacing: 16,
-                runSpacing: 8,
-                children: [
-                  if (widget.education.percentage != null)
-                    _buildStat(context, 'Score',
-                        widget.education.percentage!, Icons.star_outline),
-                  if (widget.education.cgpa != null)
-                    _buildStat(context, 'CGPA', widget.education.cgpa!,
-                        Icons.school_outlined),
-                  if (widget.education.currentSemester != null)
-                    _buildStat(
-                        context,
-                        'Semester',
-                        widget.education.currentSemester!,
-                        Icons.book_outlined),
-                  if (widget.education.currentYear != null)
-                    _buildStat(
-                        context,
-                        'Year',
-                        widget.education.currentYear!,
-                        Icons.calendar_today_outlined),
-                ],
-              ),
+              // Stats section
+              _buildStatsSection(context, useMobileLayout),
               if (widget.education.marksheetUrl != null) ...[
                 const SizedBox(height: 16),
                 Wrap(
@@ -363,6 +373,61 @@ class _EducationCardState extends State<_EducationCard> {
         ),
       ),
     );
+  }
+
+  Widget _buildStatsSection(BuildContext context, bool useMobileLayout) {
+    final stats = <Widget>[];
+    if (widget.education.percentage != null) {
+      stats.add(_buildStat(context, 'Score', widget.education.percentage!, Icons.star_outline));
+    }
+    if (widget.education.cgpa != null) {
+      stats.add(_buildStat(context, 'CGPA', widget.education.cgpa!, Icons.school_outlined));
+    }
+    if (widget.education.currentSemester != null) {
+      stats.add(_buildStat(context, 'Semester', widget.education.currentSemester!, Icons.book_outlined));
+    }
+    if (widget.education.currentYear != null) {
+      stats.add(_buildStat(context, 'Year', widget.education.currentYear!, Icons.calendar_today_outlined));
+    }
+    
+    if (stats.isEmpty) return const SizedBox.shrink();
+
+    if (useMobileLayout) {
+      final rows = <Widget>[];
+      for (var i = 0; i < stats.length; i += 2) {
+        final rowChildren = <Widget>[];
+        rowChildren.add(Expanded(child: stats[i]));
+        rowChildren.add(const SizedBox(width: 12));
+        if (i + 1 < stats.length) {
+          rowChildren.add(Expanded(child: stats[i + 1]));
+        } else {
+          rowChildren.add(const Expanded(child: SizedBox.shrink()));
+        }
+        if (rows.isNotEmpty) {
+          rows.add(const SizedBox(height: 12));
+        }
+        rows.add(Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: rowChildren,
+        ));
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: rows,
+      );
+    } else {
+      final rowChildren = <Widget>[];
+      for (var i = 0; i < stats.length; i++) {
+        rowChildren.add(stats[i]);
+        if (i < stats.length - 1) {
+          rowChildren.add(const SizedBox(width: 16));
+        }
+      }
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: rowChildren,
+      );
+    }
   }
 
   Widget _buildStat(

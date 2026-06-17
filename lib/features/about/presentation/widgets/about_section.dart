@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -248,102 +249,172 @@ class AboutSection extends StatelessWidget {
   }
 
   Widget _buildTextContent(BuildContext context, AboutState state) {
+    final isMobile = ResponsiveUtils.isMobile(context);
+    final isTablet = ResponsiveUtils.isTablet(context);
+
+    final textDetails = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Who Am I?',
+          style: GoogleFonts.poppins(
+            fontSize: 28,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          width: 48,
+          height: 4,
+          decoration: BoxDecoration(
+            gradient:
+                const LinearGradient(colors: AppColors.primaryGradient),
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          AppConstants.aboutText,
+          style: GoogleFonts.inter(
+            fontSize: 15,
+            height: 1.8,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+
+    if (isMobile || isTablet) {
+      return FadeInRight(
+        duration: const Duration(milliseconds: 600),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            textDetails,
+            const SizedBox(height: 20),
+            Center(
+              child: Lottie.asset(
+                'assets/lottie/coder.json',
+                height: 200,
+                fit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(height: 20),
+            _buildObjectiveCard(context),
+            const SizedBox(height: 28),
+            _buildTechStack(context),
+          ],
+        ),
+      );
+    }
+
     return FadeInRight(
       duration: const Duration(milliseconds: 600),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Who Am I?',
-            style: GoogleFonts.poppins(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            width: 48,
-            height: 4,
-            decoration: BoxDecoration(
-              gradient:
-                  const LinearGradient(colors: AppColors.primaryGradient),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            AppConstants.aboutText,
-            style: GoogleFonts.inter(
-              fontSize: 15,
-              height: 1.8,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(height: 28),
-          GlassCard(
-            padding: const EdgeInsets.all(24),
+          Expanded(
+            flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 4,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: AppColors.primaryGradient,
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      'Career Objective',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  AppConstants.careerObjective,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    height: 1.7,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                textDetails,
+                const SizedBox(height: 20),
+                _buildObjectiveCard(context),
+                const SizedBox(height: 28),
+                _buildTechStack(context),
+              ],
+            ),
+          ),
+          const SizedBox(width: 30),
+          Expanded(
+            flex: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40),
+                Lottie.asset(
+                  'assets/lottie/coder.json',
+                  height: 300,
+                  fit: BoxFit.contain,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 28),
-          Text(
-            'Technologies I Work With',
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildObjectiveCard(BuildContext context) {
+    return GlassCard(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              'Flutter', 'Dart', 'Python', 'Java',
-              'HTML', 'CSS', 'Firebase', 'MongoDB',
-              'Git', 'GitHub', 'REST APIs',
-            ].map((tech) => _buildTechChip(context, tech)).toList(),
+              Container(
+                width: 4,
+                height: 24,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: AppColors.primaryGradient,
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Career Objective',
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            AppConstants.careerObjective,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              height: 1.7,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTechStack(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Technologies I Work With',
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            'Flutter', 'Dart', 'Python', 'Java',
+            'HTML', 'CSS', 'Firebase', 'MongoDB',
+            'Git', 'GitHub', 'REST APIs',
+          ].map((tech) => _buildTechChip(context, tech)).toList(),
+        ),
+      ],
     );
   }
 

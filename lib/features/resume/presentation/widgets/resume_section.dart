@@ -30,11 +30,7 @@ class ResumeSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.darkSurface.withOpacity(0.5)
-            : AppColors.lightCard,
-      ),
+      color: Colors.transparent,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.horizontalPadding(context),
         vertical: ResponsiveUtils.sectionVerticalPadding(context),

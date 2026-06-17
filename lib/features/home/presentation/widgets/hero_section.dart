@@ -70,15 +70,7 @@ class _HeroSectionState extends State<HeroSection>
       constraints: BoxConstraints(
         minHeight: MediaQuery.of(context).size.height,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? AppColors.heroGradientDark
-              : AppColors.heroGradientLight,
-        ),
-      ),
+      color: Colors.transparent,
       child: Stack(
         children: [
           // Background decorations
@@ -321,7 +313,8 @@ class _HeroSectionState extends State<HeroSection>
 
   Widget _buildAvatarSection(BuildContext context) {
     final isMobile = ResponsiveUtils.isMobile(context);
-    final size = isMobile ? 200.0 : 320.0;
+    final isTablet = ResponsiveUtils.isTablet(context);
+    final size = isMobile ? 200.0 : (isTablet ? 240.0 : 320.0);
 
     return FadeInRight(
       delay: const Duration(milliseconds: 400),

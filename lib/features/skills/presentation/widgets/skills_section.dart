@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -25,15 +26,12 @@ class SkillsSection extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, SkillsState state) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = ResponsiveUtils.isMobile(context);
+    final isTablet = ResponsiveUtils.isTablet(context);
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.darkSurface.withOpacity(0.5)
-            : AppColors.lightCard,
-      ),
+      color: Colors.transparent,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveUtils.horizontalPadding(context),
         vertical: ResponsiveUtils.sectionVerticalPadding(context),
@@ -48,7 +46,40 @@ class SkillsSection extends StatelessWidget {
           if (state is SkillsLoading)
             const Center(child: CircularProgressIndicator())
           else if (state is SkillsLoaded)
-            _SkillsSlider(categories: state.categories)
+            isMobile || isTablet
+                ? Column(
+                    children: [
+                      Center(
+                        child: Lottie.asset(
+                          'assets/lottie/development.json',
+                          height: 180,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _SkillsSlider(categories: state.categories),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: _SkillsSlider(categories: state.categories),
+                      ),
+                      const SizedBox(width: 40),
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: Lottie.asset(
+                            'assets/lottie/development.json',
+                            height: 320,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
           else
             const SizedBox.shrink(),
         ],
